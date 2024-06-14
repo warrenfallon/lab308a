@@ -1,19 +1,19 @@
 // Declare a global counter variable
   let counter = 0;
 
-  // Create a simple function that increments the counter and calls itself
+  // Create a simple function that increments the counter and calls itself recursively
     function recursiveFunction () {
-   counter++;
-   recursiveFunction();
+   counter++; // Increase the counter by 1
+   recursiveFunction(); // Call the function again (recursively)
  }
 
-    // Surround the inital function call in a try/catach block
+    // Try to call the recursive function and catch any errors that occur
        try {
-    recursiveFunction() ; 
+    recursiveFunction(); // Start the recursive calls
 } catch (error) {
-     // log the error and the value of the counter variable
+     // If a stack overflow error occurs, log the error and the value
      console.log ("Stack overflow error:",error);
-       console.log ("Counter value:", counter);
+       console.log ("Counter value:", counter); // Log how manay times the function was called before the error
        }
 
 
@@ -42,6 +42,17 @@ let result = fn.apply(this,args);
 };
 }
  
+// Test the function to handle recursion without stack overflow
+function Trampoline(fn) {
+return function(...args){
+    let result = fn.apply(this,args);
+    while (typeof result === 'function') {
+        result = result ();
+    }
+return result;
+};
+
+}
 
 // Trampolined function to flatten nested arrays
 function
@@ -66,6 +77,44 @@ const TrampolinedFlatten = Trampoline(flattenArrayTrampoline);
 console.log(TrampolinedFlatten([1, [2, [3, [4, [5]]]]]));
 
 //Output:[1, 2, 3, 4, 5]
+
+
+// Part 3: Deferred Execution Code
+
+// Function to check if a number is prime 
+
+
+const result = document.querySelector(".result");
+
+function isPrime(num) {
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) {
+      return false;
+    }
+  }
+  return num > 1;
+}
+
+function printPrimeNumbersToNum(num) {
+        for (let i = 2; i <= num; i++) {
+            if (isPrime(i)) {
+        
+                let item = document.createElement("li");
+                item.innerText = i;
+                result.appendChild(item);
+              
+            }
+          } 
+          
+          setTimeout(() =>{
+alert("calculations complete")
+},10)
+
+ }
+// Run the function with n = 10000
+printPrimeNumbersToNum(10000);
+
+
 
 
 
